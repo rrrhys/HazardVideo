@@ -21,6 +21,9 @@ namespace Hazard_Video
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            panel1.Dock = DockStyle.Fill;
+            pre_test_detail_panel.Dock = DockStyle.Fill;
+            panel1.Visible = false;
             wmp.uiMode = "none";
 
             load_state();
@@ -48,17 +51,13 @@ namespace Hazard_Video
         }
         void movie_tick()
         {
-            foreach (Hazard h in current_video.hazards)
-            {
-                if (wmp.Ctlcontrols.currentPosition > h.hazard_start && wmp.Ctlcontrols.currentPosition < h.hazard_end)
-                {
-                    lHazardIndicator.BackColor = Color.Red;
-                }
+            if(is_hazard(wmp.Ctlcontrols.currentPosition)){
+                lHazardIndicator.BackColor = Color.Red;
+            }
                 else
                 {
                     lHazardIndicator.BackColor = Color.Green;
                 }
-            }
         }
 
         private void load_videos_ui()
@@ -81,7 +80,28 @@ namespace Hazard_Video
 
         private void hazard_guessed_attempt(double video_time)
         {
-            log.Items.Add("Hazard guessed at: " + video_time.ToString());
+            if (is_hazard(video_time))
+            {
+
+                log.Items.Add("Hazard guessed correctly at: " + video_time.ToString());
+            }
+            else
+            {
+                log.Items.Add("Hazard guessed incorrectly at: " + video_time.ToString());
+            }
+            
+
+        }
+        private bool is_hazard(double video_time)
+        {
+            foreach (Hazard h in current_video.hazards)
+            {
+                if (video_time > h.hazard_start && video_time < h.hazard_end)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         private void begin_video()
         {
@@ -185,6 +205,16 @@ namespace Hazard_Video
         private void timer1_Tick(object sender, EventArgs e)
         {
             movie_tick();
+        }
+
+        private void hazard_guessed_MouseEnter(object sender, EventArgs e)
+        {
+            ((Label)sender).ForeColor = Color.Red;
+        }
+
+        private void hazard_guessed_MouseLeave(object sender, EventArgs e)
+        {
+            ((Label)sender).ForeColor = SystemColors.HotTrack;
         }
 
     }
