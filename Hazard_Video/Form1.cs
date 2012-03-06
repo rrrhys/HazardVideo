@@ -16,6 +16,7 @@ namespace Hazard_Video
         
         public Hazard_video current_video = null;
         public Hazard_test current_hazard_test = null;
+        public Hazard_test_question current_hazard_test_question = null;
         public Form1()
         {
             InitializeComponent();
@@ -30,9 +31,22 @@ namespace Hazard_Video
             tTimeSittingExam.Text = DateTime.Now.ToString();
             load_state();
             load_videos_ui();
-            
+            load_test_state();
            // wmp.PositionChange += new AxWMPLib._WMPOCXEvents_PositionChangeEventHandler(movie_tick);
               }
+
+        private void load_test_state()
+        {
+            if (File.Exists("test_state.json"))
+            {
+                using (StreamReader sr = new StreamReader("test_state.json"))
+                {
+                    string state = sr.ReadToEnd();
+                    current_hazard_test = Newtonsoft.Json.JsonConvert.DeserializeObject<Hazard_test>(state);
+               
+                }
+            }
+        }
 
         private void load_state()
         {
@@ -82,6 +96,10 @@ namespace Hazard_Video
 
         private void hazard_guessed_attempt(double video_time)
         {
+            if (current_hazard_test_question != null)
+            {
+                current_hazard_test_question.clicks_recorded.Add(video_time);
+            }
             if (is_hazard(video_time))
             {
 
@@ -126,6 +144,10 @@ namespace Hazard_Video
                 else if (e.newState == (int)WMPLib.WMPPlayState.wmppsMediaEnded)
                 {
                     log.Items.Add("Video Ended");
+                    if (current_hazard_test != null)
+                    {
+                        continue_test();
+                    }
                 }
                 else if (e.newState == (int)WMPLib.WMPPlayState.wmppsStopped)
                 {
@@ -227,22 +249,46 @@ namespace Hazard_Video
                 q.video = h;
                 
                 current_hazard_test.hazard_test_questions.Add(q);
+                current_hazard_test.hazard_test_questions.Sort(delegate(Hazard_test_question h1, Hazard_test_question h2) { return h1.ordering_key.CompareTo(h2.ordering_key); });
             }
             save_test_state();
+            pre_test_detail_panel.Visible = false;
+            panel1.Visible = true;
+            continue_test();
+        }
+
+        private void continue_test()
+        {
+            foreach (Hazard_test_question q in current_hazard_test.hazard_test_questions)
+            {
+                if (q.finished = false)
+                {
+                    current_hazard_test_question = q;
+                    wmp.URL = q.video.filename;
+                }
+            }
         }
 
         private void save_test_state()
         {
-            using(StreamWriter sw = new StreamWriter(
+            using (StreamWriter sw = new StreamWriter("test_state.json"))
+            {
+                sw.Write(Newtonsoft.Json.JsonConvert.SerializeObject(current_hazard_test));
+            }
         }
         #region classes
         public class Hazard_test_question
         {
+            public Hazard_test_question()
+            {
+                this.ordering_key = Guid.NewGuid().ToString();
+            }
             public Hazard_video video;
             public DateTime time_started;
             public DateTime time_finished;
+            public bool finished = false;
             public List<double> clicks_recorded = new List<double>();
-
+            public string ordering_key;
             public bool Question_passed
             {
                 get

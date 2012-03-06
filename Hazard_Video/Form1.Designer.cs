@@ -159,6 +159,7 @@
             this.wmp.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("wmp.OcxState")));
             this.wmp.Size = new System.Drawing.Size(191, 211);
             this.wmp.TabIndex = 0;
+            this.wmp.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.wmp_PlayStateChange);
             // 
             // panel2
             // 
