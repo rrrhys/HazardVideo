@@ -13,7 +13,9 @@ namespace Hazard_Video
     public partial class Form1 : Form
     {
         public List<Hazard_video> hazard_videos = new List<Hazard_video>();
+        
         public Hazard_video current_video = null;
+        public Hazard_test current_hazard_test = null;
         public Form1()
         {
             InitializeComponent();
@@ -25,7 +27,7 @@ namespace Hazard_Video
             pre_test_detail_panel.Dock = DockStyle.Fill;
             panel1.Visible = false;
             wmp.uiMode = "none";
-
+            tTimeSittingExam.Text = DateTime.Now.ToString();
             load_state();
             load_videos_ui();
             
@@ -136,15 +138,7 @@ namespace Hazard_Video
                     log.Items.Add("New Play state: " + e.newState);
                 }
         }
-        public class Hazard_video
-        {
-            public List<Hazard> hazards = new List<Hazard>();
-            public string filename;
-        }
-        public class Hazard{
-            public double hazard_start;
-            public double hazard_end;
-        }
+
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -216,6 +210,70 @@ namespace Hazard_Video
         {
             ((Label)sender).ForeColor = SystemColors.HotTrack;
         }
+
+        private void panel6_Resize(object sender, EventArgs e)
+        {
+            bBeginTest.Left = panel6.Width/2 - bBeginTest.Width / 2;
+        }
+
+        private void bBeginTest_Click(object sender, EventArgs e)
+        {
+            current_hazard_test = new Hazard_test();
+            current_hazard_test.candidate_name = tCandidateName.Text;
+            current_hazard_test.time_started = DateTime.Now;
+            foreach (Hazard_video h in hazard_videos)
+            {
+                Hazard_test_question q = new Hazard_test_question();
+                q.video = h;
+                
+                current_hazard_test.hazard_test_questions.Add(q);
+            }
+            save_test_state();
+        }
+
+        private void save_test_state()
+        {
+            using(StreamWriter sw = new StreamWriter(
+        }
+        #region classes
+        public class Hazard_test_question
+        {
+            public Hazard_video video;
+            public DateTime time_started;
+            public DateTime time_finished;
+            public List<double> clicks_recorded = new List<double>();
+
+            public bool Question_passed
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                    /*if (video_time > h.hazard_start && video_time < h.hazard_end)
+                    {
+                        return true;
+                    }*/
+                }
+            }
+        }
+        public class Hazard_test
+        {
+            public string candidate_name;
+            public DateTime time_started;
+            public DateTime time_finished;
+            public List<Hazard_test_question> hazard_test_questions = new List<Hazard_test_question>();
+
+        }
+        public class Hazard_video
+        {
+            public List<Hazard> hazards = new List<Hazard>();
+            public string filename;
+        }
+        public class Hazard
+        {
+            public double hazard_start;
+            public double hazard_end;
+        }
+        #endregion
 
     }
 }

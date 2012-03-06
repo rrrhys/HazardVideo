@@ -62,8 +62,8 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.rSetA = new System.Windows.Forms.RadioButton();
             this.rSetB = new System.Windows.Forms.RadioButton();
-            this.button2 = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.bBeginTest = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wmp)).BeginInit();
             this.panel2.SuspendLayout();
@@ -260,6 +260,7 @@
             // 
             this.pre_test_detail_panel.Controls.Add(this.panel5);
             this.pre_test_detail_panel.Controls.Add(this.panel4);
+            this.pre_test_detail_panel.Controls.Add(this.panel6);
             this.pre_test_detail_panel.Location = new System.Drawing.Point(12, 49);
             this.pre_test_detail_panel.Name = "pre_test_detail_panel";
             this.pre_test_detail_panel.Size = new System.Drawing.Size(397, 266);
@@ -317,12 +318,11 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(133, 266);
+            this.panel4.Size = new System.Drawing.Size(133, 166);
             this.panel4.TabIndex = 5;
             // 
             // panel5
             // 
-            this.panel5.Controls.Add(this.panel6);
             this.panel5.Controls.Add(this.rSetB);
             this.panel5.Controls.Add(this.rSetA);
             this.panel5.Controls.Add(this.tCandidateName);
@@ -330,7 +330,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(133, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(264, 266);
+            this.panel5.Size = new System.Drawing.Size(264, 166);
             this.panel5.TabIndex = 6;
             // 
             // rSetA
@@ -355,24 +355,26 @@
             this.rSetB.Text = "Set B";
             this.rSetB.UseVisualStyleBackColor = true;
             // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(52, 26);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(130, 42);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Begin Test";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.button2);
+            this.panel6.Controls.Add(this.bBeginTest);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel6.Location = new System.Drawing.Point(0, 166);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(264, 100);
-            this.panel6.TabIndex = 8;
+            this.panel6.Size = new System.Drawing.Size(397, 100);
+            this.panel6.TabIndex = 9;
+            this.panel6.Resize += new System.EventHandler(this.panel6_Resize);
+            // 
+            // bBeginTest
+            // 
+            this.bBeginTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bBeginTest.Location = new System.Drawing.Point(52, 26);
+            this.bBeginTest.Name = "bBeginTest";
+            this.bBeginTest.Size = new System.Drawing.Size(130, 42);
+            this.bBeginTest.TabIndex = 7;
+            this.bBeginTest.Text = "Begin Test";
+            this.bBeginTest.UseVisualStyleBackColor = true;
+            this.bBeginTest.Click += new System.EventHandler(this.bBeginTest_Click);
             // 
             // Form1
             // 
@@ -436,7 +438,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button bBeginTest;
     }
 }
 
