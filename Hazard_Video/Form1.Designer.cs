@@ -44,6 +44,7 @@
             this.wmp = new AxWMPLib.AxWindowsMediaPlayer();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.lstHazards = new System.Windows.Forms.ListBox();
             this.lstVideos = new System.Windows.Forms.ListBox();
             this.lHazardIndicator = new System.Windows.Forms.Label();
@@ -51,27 +52,37 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.pre_test_detail_panel = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.rSetB = new System.Windows.Forms.RadioButton();
+            this.rSetA = new System.Windows.Forms.RadioButton();
             this.tCandidateName = new System.Windows.Forms.TextBox();
             this.tTimeSittingExam = new System.Windows.Forms.TextBox();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.rSetA = new System.Windows.Forms.RadioButton();
-            this.rSetB = new System.Windows.Forms.RadioButton();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.bBeginTest = new System.Windows.Forms.Button();
+            this.pNextQuestion = new System.Windows.Forms.Panel();
+            this.bNextQuestion = new System.Windows.Forms.Button();
+            this.wmp_click = new AxWMPLib.AxWindowsMediaPlayer();
+            this.rSetC = new System.Windows.Forms.RadioButton();
+            this.pTestFinished = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lScore = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wmp)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.pre_test_detail_panel.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.panel6.SuspendLayout();
+            this.pNextQuestion.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.wmp_click)).BeginInit();
+            this.pTestFinished.SuspendLayout();
             this.SuspendLayout();
             // 
             // hazard_guessed
@@ -163,6 +174,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.wmp_click);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.hazard_guessed);
             this.panel2.Controls.Add(this.label3);
@@ -180,6 +192,15 @@
             this.button1.TabIndex = 18;
             this.button1.Text = "Admin";
             this.button1.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(137, 14);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(95, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Add clicked sound";
             // 
             // lstHazards
             // 
@@ -248,24 +269,77 @@
             this.label1.TabIndex = 15;
             this.label1.Text = "Add a new Hazard:";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(137, 14);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(95, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Add clicked sound";
-            // 
             // pre_test_detail_panel
             // 
             this.pre_test_detail_panel.Controls.Add(this.panel5);
             this.pre_test_detail_panel.Controls.Add(this.panel4);
             this.pre_test_detail_panel.Controls.Add(this.panel6);
-            this.pre_test_detail_panel.Location = new System.Drawing.Point(12, 49);
+            this.pre_test_detail_panel.Location = new System.Drawing.Point(238, 55);
             this.pre_test_detail_panel.Name = "pre_test_detail_panel";
-            this.pre_test_detail_panel.Size = new System.Drawing.Size(397, 266);
+            this.pre_test_detail_panel.Size = new System.Drawing.Size(254, 190);
             this.pre_test_detail_panel.TabIndex = 19;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.rSetC);
+            this.panel5.Controls.Add(this.rSetB);
+            this.panel5.Controls.Add(this.rSetA);
+            this.panel5.Controls.Add(this.tCandidateName);
+            this.panel5.Controls.Add(this.tTimeSittingExam);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel5.Location = new System.Drawing.Point(133, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(121, 90);
+            this.panel5.TabIndex = 6;
+            // 
+            // rSetB
+            // 
+            this.rSetB.AutoSize = true;
+            this.rSetB.Location = new System.Drawing.Point(6, 114);
+            this.rSetB.Name = "rSetB";
+            this.rSetB.Size = new System.Drawing.Size(51, 17);
+            this.rSetB.TabIndex = 6;
+            this.rSetB.TabStop = true;
+            this.rSetB.Text = "Set B";
+            this.rSetB.UseVisualStyleBackColor = true;
+            // 
+            // rSetA
+            // 
+            this.rSetA.AutoSize = true;
+            this.rSetA.Location = new System.Drawing.Point(6, 91);
+            this.rSetA.Name = "rSetA";
+            this.rSetA.Size = new System.Drawing.Size(51, 17);
+            this.rSetA.TabIndex = 5;
+            this.rSetA.TabStop = true;
+            this.rSetA.Text = "Set A";
+            this.rSetA.UseVisualStyleBackColor = true;
+            // 
+            // tCandidateName
+            // 
+            this.tCandidateName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tCandidateName.Location = new System.Drawing.Point(6, 10);
+            this.tCandidateName.Name = "tCandidateName";
+            this.tCandidateName.Size = new System.Drawing.Size(200, 29);
+            this.tCandidateName.TabIndex = 3;
+            // 
+            // tTimeSittingExam
+            // 
+            this.tTimeSittingExam.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tTimeSittingExam.Location = new System.Drawing.Point(6, 49);
+            this.tTimeSittingExam.Name = "tTimeSittingExam";
+            this.tTimeSittingExam.Size = new System.Drawing.Size(200, 29);
+            this.tTimeSittingExam.TabIndex = 4;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.label4);
+            this.panel4.Controls.Add(this.label5);
+            this.panel4.Controls.Add(this.label6);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(133, 90);
+            this.panel4.TabIndex = 5;
             // 
             // label4
             // 
@@ -295,74 +369,13 @@
             this.label6.TabIndex = 2;
             this.label6.Text = "Question Set";
             // 
-            // tCandidateName
-            // 
-            this.tCandidateName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tCandidateName.Location = new System.Drawing.Point(6, 10);
-            this.tCandidateName.Name = "tCandidateName";
-            this.tCandidateName.Size = new System.Drawing.Size(200, 29);
-            this.tCandidateName.TabIndex = 3;
-            // 
-            // tTimeSittingExam
-            // 
-            this.tTimeSittingExam.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tTimeSittingExam.Location = new System.Drawing.Point(6, 49);
-            this.tTimeSittingExam.Name = "tTimeSittingExam";
-            this.tTimeSittingExam.Size = new System.Drawing.Size(200, 29);
-            this.tTimeSittingExam.TabIndex = 4;
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.label4);
-            this.panel4.Controls.Add(this.label5);
-            this.panel4.Controls.Add(this.label6);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel4.Location = new System.Drawing.Point(0, 0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(133, 166);
-            this.panel4.TabIndex = 5;
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.rSetB);
-            this.panel5.Controls.Add(this.rSetA);
-            this.panel5.Controls.Add(this.tCandidateName);
-            this.panel5.Controls.Add(this.tTimeSittingExam);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(133, 0);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(264, 166);
-            this.panel5.TabIndex = 6;
-            // 
-            // rSetA
-            // 
-            this.rSetA.AutoSize = true;
-            this.rSetA.Location = new System.Drawing.Point(6, 91);
-            this.rSetA.Name = "rSetA";
-            this.rSetA.Size = new System.Drawing.Size(51, 17);
-            this.rSetA.TabIndex = 5;
-            this.rSetA.TabStop = true;
-            this.rSetA.Text = "Set A";
-            this.rSetA.UseVisualStyleBackColor = true;
-            // 
-            // rSetB
-            // 
-            this.rSetB.AutoSize = true;
-            this.rSetB.Location = new System.Drawing.Point(85, 91);
-            this.rSetB.Name = "rSetB";
-            this.rSetB.Size = new System.Drawing.Size(51, 17);
-            this.rSetB.TabIndex = 6;
-            this.rSetB.TabStop = true;
-            this.rSetB.Text = "Set B";
-            this.rSetB.UseVisualStyleBackColor = true;
-            // 
             // panel6
             // 
             this.panel6.Controls.Add(this.bBeginTest);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel6.Location = new System.Drawing.Point(0, 166);
+            this.panel6.Location = new System.Drawing.Point(0, 90);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(397, 100);
+            this.panel6.Size = new System.Drawing.Size(254, 100);
             this.panel6.TabIndex = 9;
             this.panel6.Resize += new System.EventHandler(this.panel6_Resize);
             // 
@@ -377,11 +390,92 @@
             this.bBeginTest.UseVisualStyleBackColor = true;
             this.bBeginTest.Click += new System.EventHandler(this.bBeginTest_Click);
             // 
+            // pNextQuestion
+            // 
+            this.pNextQuestion.Controls.Add(this.bNextQuestion);
+            this.pNextQuestion.Location = new System.Drawing.Point(230, 338);
+            this.pNextQuestion.Name = "pNextQuestion";
+            this.pNextQuestion.Size = new System.Drawing.Size(200, 100);
+            this.pNextQuestion.TabIndex = 8;
+            this.pNextQuestion.Visible = false;
+            // 
+            // bNextQuestion
+            // 
+            this.bNextQuestion.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bNextQuestion.Location = new System.Drawing.Point(46, 18);
+            this.bNextQuestion.Name = "bNextQuestion";
+            this.bNextQuestion.Size = new System.Drawing.Size(133, 69);
+            this.bNextQuestion.TabIndex = 0;
+            this.bNextQuestion.Text = "Next Question";
+            this.bNextQuestion.UseVisualStyleBackColor = true;
+            this.bNextQuestion.Click += new System.EventHandler(this.bNextQuestion_Click);
+            // 
+            // wmp_click
+            // 
+            this.wmp_click.Enabled = true;
+            this.wmp_click.Location = new System.Drawing.Point(238, 14);
+            this.wmp_click.Name = "wmp_click";
+            this.wmp_click.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("wmp_click.OcxState")));
+            this.wmp_click.Size = new System.Drawing.Size(75, 23);
+            this.wmp_click.TabIndex = 19;
+            this.wmp_click.Visible = false;
+            // 
+            // rSetC
+            // 
+            this.rSetC.AutoSize = true;
+            this.rSetC.Location = new System.Drawing.Point(6, 137);
+            this.rSetC.Name = "rSetC";
+            this.rSetC.Size = new System.Drawing.Size(51, 17);
+            this.rSetC.TabIndex = 7;
+            this.rSetC.TabStop = true;
+            this.rSetC.Text = "Set C";
+            this.rSetC.UseVisualStyleBackColor = true;
+            // 
+            // pTestFinished
+            // 
+            this.pTestFinished.Controls.Add(this.lScore);
+            this.pTestFinished.Controls.Add(this.label8);
+            this.pTestFinished.Controls.Add(this.label7);
+            this.pTestFinished.Location = new System.Drawing.Point(32, 65);
+            this.pTestFinished.Name = "pTestFinished";
+            this.pTestFinished.Size = new System.Drawing.Size(200, 127);
+            this.pTestFinished.TabIndex = 20;
+            this.pTestFinished.Visible = false;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(14, 12);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(106, 13);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "You finished the test!";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(14, 31);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(38, 13);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Score:";
+            // 
+            // lScore
+            // 
+            this.lScore.AutoSize = true;
+            this.lScore.Location = new System.Drawing.Point(58, 31);
+            this.lScore.Name = "lScore";
+            this.lScore.Size = new System.Drawing.Size(35, 13);
+            this.lScore.TabIndex = 2;
+            this.lScore.Text = "label9";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(641, 450);
+            this.Controls.Add(this.pTestFinished);
+            this.Controls.Add(this.pNextQuestion);
             this.Controls.Add(this.pre_test_detail_panel);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
@@ -397,11 +491,15 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.pre_test_detail_panel.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.panel6.ResumeLayout(false);
+            this.pNextQuestion.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.wmp_click)).EndInit();
+            this.pTestFinished.ResumeLayout(false);
+            this.pTestFinished.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -440,6 +538,14 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Button bBeginTest;
+        private System.Windows.Forms.Panel pNextQuestion;
+        private System.Windows.Forms.Button bNextQuestion;
+        private AxWMPLib.AxWindowsMediaPlayer wmp_click;
+        private System.Windows.Forms.RadioButton rSetC;
+        private System.Windows.Forms.Panel pTestFinished;
+        private System.Windows.Forms.Label lScore;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
     }
 }
 

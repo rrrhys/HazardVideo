@@ -6,6 +6,8 @@
 *.user
 *.sln.docstates
 *.AVI
+*.flv
+*.mp4
 
 # Build results
 [Rr]elease/
