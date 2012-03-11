@@ -18,7 +18,7 @@ namespace Hazard_Video
             real_test, fake_score_high, fake_score_low
         }
         public List<Hazard_video> hazard_videos = new List<Hazard_video>();
-        
+        public string definition_file = "definitions/state.json";
         public Hazard_video current_video = null;
         public Hazard_test current_hazard_test = null;
         public Hazard_test_question current_hazard_test_question = null;
@@ -45,13 +45,13 @@ namespace Hazard_Video
 
         private void load_test_state()
         {
-            if (File.Exists("test_state.json"))
+            if (File.Exists("definitions/test_state.json"))
             {
-                using (StreamReader sr = new StreamReader("test_state.json"))
+                using (StreamReader sr = new StreamReader("definitions/test_state.json"))
                 {
                     string state = sr.ReadToEnd();
                     current_hazard_test = Newtonsoft.Json.JsonConvert.DeserializeObject<Hazard_test>(state);
-               
+                    continue_test();
                 }
             }
         }
@@ -59,16 +59,35 @@ namespace Hazard_Video
         private void load_state()
         {
             //throw new NotImplementedException();
-            using (StreamReader sr = new StreamReader("state.json"))
+            if (!File.Exists(definition_file))
             {
-                string state = sr.ReadToEnd();
-                hazard_videos = Newtonsoft.Json.JsonConvert.DeserializeObject < List<Hazard_video>>(state);
+                hazard_videos = new List<Hazard_video>();
+                foreach (string v in Directory.GetFiles("videos/", "*.avi"))
+                {
+                    Hazard_video h = new Hazard_video();
+                    h.filename = v;
+                    hazard_videos.Add(h);
+                }
+                foreach (string v in Directory.GetFiles("videos/", "*.mp4"))
+                {
+                    Hazard_video h = new Hazard_video();
+                    h.filename = v;
+                    hazard_videos.Add(h);
+                }
+            }
+            else
+            {
+                using (StreamReader sr = new StreamReader(definition_file))
+                {
+                    string state = sr.ReadToEnd();
+                    hazard_videos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Hazard_video>>(state);
+                }
             }
         }
 
         void save_state()
         {
-            using (StreamWriter sw = new StreamWriter("state.json"))
+            using (StreamWriter sw = new StreamWriter(definition_file))
             {
                 sw.Write(Newtonsoft.Json.JsonConvert.SerializeObject(hazard_videos));
             }
@@ -114,11 +133,11 @@ namespace Hazard_Video
             if (is_hazard(video_time))
             {
                 
-                log.Items.Add("Hazard guessed correctly at: " + video_time.ToString());
+                log("Hazard guessed correctly at: " + video_time.ToString());
             }
             else
             {
-                log.Items.Add("Hazard guessed incorrectly at: " + video_time.ToString());
+                log("Hazard guessed incorrectly at: " + video_time.ToString());
             }
             
 
@@ -148,7 +167,7 @@ namespace Hazard_Video
             pre_test_detail_panel.Visible = false;
             timer1.Enabled = true;
             load_hazards();
-            log.Items.Add("Begin Video: " + current_video.filename);
+            log("Begin Video: " + current_video.filename);
             wmp.uiMode = "Full";
             wmp.URL = current_video.filename;
             wmp.Ctlcontrols.play();
@@ -161,28 +180,34 @@ namespace Hazard_Video
                 
                 if (e.newState == (int)WMPLib.WMPPlayState.wmppsPlaying)
                 {
-                    log.Items.Add("Video Playing");
+                    log("Video Playing");
                 }
  
                 else if (e.newState == (int)WMPLib.WMPPlayState.wmppsStopped)
                 {
-                    log.Items.Add("Player Stopped");
+                    log("Player Stopped");
                     timer1.Enabled = false;
                     if (current_hazard_test_question != null)
                     {
                         current_hazard_test_question.finished = true;
-                    }
-                    save_state();
+                    
+                    
                     panel1.Visible = false;
                     pNextQuestion.Visible = true;
-                  
+                    }
+                    save_state();
 
                 }
 
                 else
                 {
-                    log.Items.Add("New Play state: " + e.newState);
+                   //log.Items.Add("New Play state: " + e.newState);
                 }
+        }
+
+        private void log(string p)
+        {
+            llog.Items.Insert(0,p);
         }
 
 
@@ -317,36 +342,52 @@ namespace Hazard_Video
 
         private void do_test_finished()
         {
+            current_hazard_test.time_finished = DateTime.Now;
             pNextQuestion.Visible = false;
             pTestFinished.Visible = true;
-            int score = 0;
+            int actual_score = 0;
+            int report_score = 0;
             //generate score.
             foreach (Hazard_test_question hq in current_hazard_test.hazard_test_questions)
             {
                 if (hq.Question_passed)
                 {
-                    score += 1;
+                    actual_score += 1;
                 }
+                report_score = actual_score;
             }
             if (current_hazard_test.test_type == test_type.fake_score_high)
             {
-                score = current_hazard_test.hazard_test_questions.Count - 1;
+                report_score = current_hazard_test.hazard_test_questions.Count - 1;
             }
             if (current_hazard_test.test_type == test_type.fake_score_low)
             {
-                score = 2;
+                report_score = 2;
             }
-            lScore.Text = score.ToString() + "/" +  current_hazard_test.hazard_test_questions.Count;
+            string report_filename = "definitions/scores.csv";
+            if (!File.Exists(report_filename))
+            {
+                using (StreamWriter sw = new StreamWriter(report_filename, true, Encoding.Default))
+                {
+                    sw.WriteLine("{0},{1},{2},{3},{4},{5}", "Candidate Name", "Test Started", "Test Finished", "Actual Score", "Reported Score", "Test Conducted");
+                }
+            }
+            using (StreamWriter sw = new StreamWriter(report_filename,true,Encoding.Default))
+            {
+                sw.WriteLine("{0},{1},{2},{3},{4},{5}", current_hazard_test.candidate_name, current_hazard_test.time_started.ToString(), current_hazard_test.time_finished.ToString(), actual_score, report_score,current_hazard_test.test_type.ToString());
+            }
+            File.Delete("definitions/test_state.json");
+            lScore.Text = report_score.ToString() + "/" +  current_hazard_test.hazard_test_questions.Count;
         }
 
         private void save_test_state()
         {
-            using (StreamWriter sw = new StreamWriter("test_state.json"))
+            using (StreamWriter sw = new StreamWriter("definitions/test_state.json"))
             {
                 sw.Write(Newtonsoft.Json.JsonConvert.SerializeObject(current_hazard_test));
             }
         }
-        #region classes
+            #region classes
         public class Hazard_test_question
         {
             public Hazard_test_question()
@@ -405,6 +446,28 @@ namespace Hazard_Video
         private void bNextQuestion_Click(object sender, EventArgs e)
         {
             continue_test();
+        }
+
+        private void wmp_ClickEvent(object sender, AxWMPLib._WMPOCXEvents_ClickEvent e)
+        {
+            hazard_guessed_attempt(wmp.Ctlcontrols.currentPosition);
+        }
+
+        private void bDeleteHazard_Click(object sender, EventArgs e)
+        {
+            current_video.hazards.RemoveAt(lstHazards.SelectedIndex);
+        }
+
+        private void lstHazards_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstHazards.SelectedIndex > -1)
+            {
+                bDeleteHazard.Enabled = true;
+            }
+            else
+            {
+                bDeleteHazard.Enabled = false;
+            }
         }
 
     }

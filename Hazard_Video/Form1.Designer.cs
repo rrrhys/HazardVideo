@@ -34,7 +34,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.hazard_guessed = new System.Windows.Forms.Label();
-            this.log = new System.Windows.Forms.ListBox();
+            this.llog = new System.Windows.Forms.ListBox();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -43,6 +43,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.wmp = new AxWMPLib.AxWindowsMediaPlayer();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.wmp_click = new AxWMPLib.AxWindowsMediaPlayer();
             this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.lstHazards = new System.Windows.Forms.ListBox();
@@ -54,6 +55,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pre_test_detail_panel = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.rSetC = new System.Windows.Forms.RadioButton();
             this.rSetB = new System.Windows.Forms.RadioButton();
             this.rSetA = new System.Windows.Forms.RadioButton();
             this.tCandidateName = new System.Windows.Forms.TextBox();
@@ -66,22 +68,21 @@
             this.bBeginTest = new System.Windows.Forms.Button();
             this.pNextQuestion = new System.Windows.Forms.Panel();
             this.bNextQuestion = new System.Windows.Forms.Button();
-            this.wmp_click = new AxWMPLib.AxWindowsMediaPlayer();
-            this.rSetC = new System.Windows.Forms.RadioButton();
             this.pTestFinished = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.lScore = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.bDeleteHazard = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wmp)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.wmp_click)).BeginInit();
             this.panel3.SuspendLayout();
             this.pre_test_detail_panel.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel6.SuspendLayout();
             this.pNextQuestion.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.wmp_click)).BeginInit();
             this.pTestFinished.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,17 +102,17 @@
             this.hazard_guessed.MouseEnter += new System.EventHandler(this.hazard_guessed_MouseEnter);
             this.hazard_guessed.MouseLeave += new System.EventHandler(this.hazard_guessed_MouseLeave);
             // 
-            // log
+            // llog
             // 
-            this.log.FormattingEnabled = true;
-            this.log.Location = new System.Drawing.Point(16, 356);
-            this.log.Name = "log";
-            this.log.Size = new System.Drawing.Size(172, 82);
-            this.log.TabIndex = 5;
+            this.llog.FormattingEnabled = true;
+            this.llog.Location = new System.Drawing.Point(16, 356);
+            this.llog.Name = "llog";
+            this.llog.Size = new System.Drawing.Size(172, 82);
+            this.llog.TabIndex = 5;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(16, 137);
+            this.button3.Location = new System.Drawing.Point(33, 144);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(49, 23);
             this.button3.TabIndex = 7;
@@ -121,7 +122,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(16, 169);
+            this.button4.Location = new System.Drawing.Point(33, 176);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(49, 23);
             this.button4.TabIndex = 8;
@@ -131,21 +132,21 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(71, 139);
+            this.textBox1.Location = new System.Drawing.Point(88, 146);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(80, 20);
             this.textBox1.TabIndex = 9;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(71, 171);
+            this.textBox2.Location = new System.Drawing.Point(88, 178);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(80, 20);
             this.textBox2.TabIndex = 10;
             // 
             // addHazard
             // 
-            this.addHazard.Location = new System.Drawing.Point(76, 197);
+            this.addHazard.Location = new System.Drawing.Point(93, 204);
             this.addHazard.Name = "addHazard";
             this.addHazard.Size = new System.Drawing.Size(75, 23);
             this.addHazard.TabIndex = 11;
@@ -170,6 +171,7 @@
             this.wmp.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("wmp.OcxState")));
             this.wmp.Size = new System.Drawing.Size(191, 211);
             this.wmp.TabIndex = 0;
+            this.wmp.ClickEvent += new AxWMPLib._WMPOCXEvents_ClickEventHandler(this.wmp_ClickEvent);
             this.wmp.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.wmp_PlayStateChange);
             // 
             // panel2
@@ -183,6 +185,16 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(441, 43);
             this.panel2.TabIndex = 2;
+            // 
+            // wmp_click
+            // 
+            this.wmp_click.Enabled = true;
+            this.wmp_click.Location = new System.Drawing.Point(238, 14);
+            this.wmp_click.Name = "wmp_click";
+            this.wmp_click.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("wmp_click.OcxState")));
+            this.wmp_click.Size = new System.Drawing.Size(75, 23);
+            this.wmp_click.TabIndex = 19;
+            this.wmp_click.Visible = false;
             // 
             // button1
             // 
@@ -207,15 +219,16 @@
             this.lstHazards.FormattingEnabled = true;
             this.lstHazards.Location = new System.Drawing.Point(16, 251);
             this.lstHazards.Name = "lstHazards";
-            this.lstHazards.Size = new System.Drawing.Size(169, 95);
+            this.lstHazards.Size = new System.Drawing.Size(169, 69);
             this.lstHazards.TabIndex = 13;
+            this.lstHazards.SelectedIndexChanged += new System.EventHandler(this.lstHazards_SelectedIndexChanged);
             // 
             // lstVideos
             // 
             this.lstVideos.FormattingEnabled = true;
-            this.lstVideos.Location = new System.Drawing.Point(65, 14);
+            this.lstVideos.Location = new System.Drawing.Point(16, 12);
             this.lstVideos.Name = "lstVideos";
-            this.lstVideos.Size = new System.Drawing.Size(120, 95);
+            this.lstVideos.Size = new System.Drawing.Size(152, 82);
             this.lstVideos.TabIndex = 14;
             this.lstVideos.SelectedIndexChanged += new System.EventHandler(this.lstVideos_SelectedIndexChanged);
             // 
@@ -235,12 +248,13 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.panel3.Controls.Add(this.bDeleteHazard);
             this.panel3.Controls.Add(this.label2);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.lstVideos);
             this.panel3.Controls.Add(this.textBox1);
             this.panel3.Controls.Add(this.lstHazards);
-            this.panel3.Controls.Add(this.log);
+            this.panel3.Controls.Add(this.llog);
             this.panel3.Controls.Add(this.button3);
             this.panel3.Controls.Add(this.button4);
             this.panel3.Controls.Add(this.textBox2);
@@ -263,7 +277,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 121);
+            this.label1.Location = new System.Drawing.Point(30, 128);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(98, 13);
             this.label1.TabIndex = 15;
@@ -276,7 +290,7 @@
             this.pre_test_detail_panel.Controls.Add(this.panel6);
             this.pre_test_detail_panel.Location = new System.Drawing.Point(238, 55);
             this.pre_test_detail_panel.Name = "pre_test_detail_panel";
-            this.pre_test_detail_panel.Size = new System.Drawing.Size(254, 190);
+            this.pre_test_detail_panel.Size = new System.Drawing.Size(152, 126);
             this.pre_test_detail_panel.TabIndex = 19;
             // 
             // panel5
@@ -289,8 +303,19 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(133, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(121, 90);
+            this.panel5.Size = new System.Drawing.Size(19, 26);
             this.panel5.TabIndex = 6;
+            // 
+            // rSetC
+            // 
+            this.rSetC.AutoSize = true;
+            this.rSetC.Location = new System.Drawing.Point(6, 137);
+            this.rSetC.Name = "rSetC";
+            this.rSetC.Size = new System.Drawing.Size(51, 17);
+            this.rSetC.TabIndex = 7;
+            this.rSetC.TabStop = true;
+            this.rSetC.Text = "Set C";
+            this.rSetC.UseVisualStyleBackColor = true;
             // 
             // rSetB
             // 
@@ -338,7 +363,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(133, 90);
+            this.panel4.Size = new System.Drawing.Size(133, 26);
             this.panel4.TabIndex = 5;
             // 
             // label4
@@ -373,9 +398,9 @@
             // 
             this.panel6.Controls.Add(this.bBeginTest);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel6.Location = new System.Drawing.Point(0, 90);
+            this.panel6.Location = new System.Drawing.Point(0, 26);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(254, 100);
+            this.panel6.Size = new System.Drawing.Size(152, 100);
             this.panel6.TabIndex = 9;
             this.panel6.Resize += new System.EventHandler(this.panel6_Resize);
             // 
@@ -410,27 +435,6 @@
             this.bNextQuestion.UseVisualStyleBackColor = true;
             this.bNextQuestion.Click += new System.EventHandler(this.bNextQuestion_Click);
             // 
-            // wmp_click
-            // 
-            this.wmp_click.Enabled = true;
-            this.wmp_click.Location = new System.Drawing.Point(238, 14);
-            this.wmp_click.Name = "wmp_click";
-            this.wmp_click.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("wmp_click.OcxState")));
-            this.wmp_click.Size = new System.Drawing.Size(75, 23);
-            this.wmp_click.TabIndex = 19;
-            this.wmp_click.Visible = false;
-            // 
-            // rSetC
-            // 
-            this.rSetC.AutoSize = true;
-            this.rSetC.Location = new System.Drawing.Point(6, 137);
-            this.rSetC.Name = "rSetC";
-            this.rSetC.Size = new System.Drawing.Size(51, 17);
-            this.rSetC.TabIndex = 7;
-            this.rSetC.TabStop = true;
-            this.rSetC.Text = "Set C";
-            this.rSetC.UseVisualStyleBackColor = true;
-            // 
             // pTestFinished
             // 
             this.pTestFinished.Controls.Add(this.lScore);
@@ -442,14 +446,14 @@
             this.pTestFinished.TabIndex = 20;
             this.pTestFinished.Visible = false;
             // 
-            // label7
+            // lScore
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(14, 12);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(106, 13);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "You finished the test!";
+            this.lScore.AutoSize = true;
+            this.lScore.Location = new System.Drawing.Point(58, 31);
+            this.lScore.Name = "lScore";
+            this.lScore.Size = new System.Drawing.Size(35, 13);
+            this.lScore.TabIndex = 2;
+            this.lScore.Text = "label9";
             // 
             // label8
             // 
@@ -460,14 +464,25 @@
             this.label8.TabIndex = 1;
             this.label8.Text = "Score:";
             // 
-            // lScore
+            // label7
             // 
-            this.lScore.AutoSize = true;
-            this.lScore.Location = new System.Drawing.Point(58, 31);
-            this.lScore.Name = "lScore";
-            this.lScore.Size = new System.Drawing.Size(35, 13);
-            this.lScore.TabIndex = 2;
-            this.lScore.Text = "label9";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(14, 12);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(106, 13);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "You finished the test!";
+            // 
+            // bDeleteHazard
+            // 
+            this.bDeleteHazard.Enabled = false;
+            this.bDeleteHazard.Location = new System.Drawing.Point(110, 326);
+            this.bDeleteHazard.Name = "bDeleteHazard";
+            this.bDeleteHazard.Size = new System.Drawing.Size(75, 23);
+            this.bDeleteHazard.TabIndex = 17;
+            this.bDeleteHazard.Text = "Delete Hazard";
+            this.bDeleteHazard.UseVisualStyleBackColor = true;
+            this.bDeleteHazard.Click += new System.EventHandler(this.bDeleteHazard_Click);
             // 
             // Form1
             // 
@@ -488,6 +503,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.wmp)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.wmp_click)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.pre_test_detail_panel.ResumeLayout(false);
@@ -497,7 +513,6 @@
             this.panel4.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.pNextQuestion.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.wmp_click)).EndInit();
             this.pTestFinished.ResumeLayout(false);
             this.pTestFinished.PerformLayout();
             this.ResumeLayout(false);
@@ -508,7 +523,7 @@
         #endregion
 
         private System.Windows.Forms.Label hazard_guessed;
-        private System.Windows.Forms.ListBox log;
+        private System.Windows.Forms.ListBox llog;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.TextBox textBox1;
@@ -546,6 +561,7 @@
         private System.Windows.Forms.Label lScore;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button bDeleteHazard;
     }
 }
 
