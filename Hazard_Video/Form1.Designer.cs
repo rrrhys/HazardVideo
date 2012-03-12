@@ -44,13 +44,12 @@
             this.wmp = new AxWMPLib.AxWindowsMediaPlayer();
             this.panel2 = new System.Windows.Forms.Panel();
             this.wmp_click = new AxWMPLib.AxWindowsMediaPlayer();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.lstHazards = new System.Windows.Forms.ListBox();
             this.lstVideos = new System.Windows.Forms.ListBox();
             this.lHazardIndicator = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
+            this.bDeleteHazard = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pre_test_detail_panel = new System.Windows.Forms.Panel();
@@ -72,7 +71,9 @@
             this.lScore = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.bDeleteHazard = new System.Windows.Forms.Button();
+            this.bAddNewVideos = new System.Windows.Forms.Button();
+            this.bShowAdmin = new System.Windows.Forms.Button();
+            this.panel7 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wmp)).BeginInit();
             this.panel2.SuspendLayout();
@@ -84,6 +85,7 @@
             this.panel6.SuspendLayout();
             this.pNextQuestion.SuspendLayout();
             this.pTestFinished.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // hazard_guessed
@@ -176,10 +178,10 @@
             // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.panel2.Controls.Add(this.panel7);
             this.panel2.Controls.Add(this.wmp_click);
-            this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.hazard_guessed);
-            this.panel2.Controls.Add(this.label3);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
@@ -195,24 +197,6 @@
             this.wmp_click.Size = new System.Drawing.Size(75, 23);
             this.wmp_click.TabIndex = 19;
             this.wmp_click.Visible = false;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(356, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "Admin";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(137, 14);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(95, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Add clicked sound";
             // 
             // lstHazards
             // 
@@ -248,6 +232,7 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.panel3.Controls.Add(this.bAddNewVideos);
             this.panel3.Controls.Add(this.bDeleteHazard);
             this.panel3.Controls.Add(this.label2);
             this.panel3.Controls.Add(this.label1);
@@ -264,6 +249,18 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(200, 450);
             this.panel3.TabIndex = 17;
+            this.panel3.Visible = false;
+            // 
+            // bDeleteHazard
+            // 
+            this.bDeleteHazard.Enabled = false;
+            this.bDeleteHazard.Location = new System.Drawing.Point(110, 326);
+            this.bDeleteHazard.Name = "bDeleteHazard";
+            this.bDeleteHazard.Size = new System.Drawing.Size(75, 23);
+            this.bDeleteHazard.TabIndex = 17;
+            this.bDeleteHazard.Text = "Delete Hazard";
+            this.bDeleteHazard.UseVisualStyleBackColor = true;
+            this.bDeleteHazard.Click += new System.EventHandler(this.bDeleteHazard_Click);
             // 
             // label2
             // 
@@ -473,16 +470,34 @@
             this.label7.TabIndex = 0;
             this.label7.Text = "You finished the test!";
             // 
-            // bDeleteHazard
+            // bAddNewVideos
             // 
-            this.bDeleteHazard.Enabled = false;
-            this.bDeleteHazard.Location = new System.Drawing.Point(110, 326);
-            this.bDeleteHazard.Name = "bDeleteHazard";
-            this.bDeleteHazard.Size = new System.Drawing.Size(75, 23);
-            this.bDeleteHazard.TabIndex = 17;
-            this.bDeleteHazard.Text = "Delete Hazard";
-            this.bDeleteHazard.UseVisualStyleBackColor = true;
-            this.bDeleteHazard.Click += new System.EventHandler(this.bDeleteHazard_Click);
+            this.bAddNewVideos.Location = new System.Drawing.Point(93, 96);
+            this.bAddNewVideos.Name = "bAddNewVideos";
+            this.bAddNewVideos.Size = new System.Drawing.Size(75, 23);
+            this.bAddNewVideos.TabIndex = 21;
+            this.bAddNewVideos.Text = "Add new Videos";
+            this.bAddNewVideos.UseVisualStyleBackColor = true;
+            this.bAddNewVideos.Click += new System.EventHandler(this.bAddNewVideos_Click);
+            // 
+            // bShowAdmin
+            // 
+            this.bShowAdmin.Location = new System.Drawing.Point(3, 8);
+            this.bShowAdmin.Name = "bShowAdmin";
+            this.bShowAdmin.Size = new System.Drawing.Size(75, 23);
+            this.bShowAdmin.TabIndex = 20;
+            this.bShowAdmin.Text = "Show Admin";
+            this.bShowAdmin.UseVisualStyleBackColor = true;
+            this.bShowAdmin.Click += new System.EventHandler(this.bShowAdmin_Click);
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.bShowAdmin);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel7.Location = new System.Drawing.Point(358, 0);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(83, 43);
+            this.panel7.TabIndex = 21;
             // 
             // Form1
             // 
@@ -497,7 +512,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.lHazardIndicator);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Hazard Test";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.wmp)).EndInit();
@@ -515,6 +530,7 @@
             this.pNextQuestion.ResumeLayout(false);
             this.pTestFinished.ResumeLayout(false);
             this.pTestFinished.PerformLayout();
+            this.panel7.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -539,8 +555,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel pre_test_detail_panel;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.RadioButton rSetB;
@@ -562,6 +576,9 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button bDeleteHazard;
+        private System.Windows.Forms.Button bAddNewVideos;
+        private System.Windows.Forms.Button bShowAdmin;
+        private System.Windows.Forms.Panel panel7;
     }
 }
 

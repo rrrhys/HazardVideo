@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json.Converters;
 using System.IO;
 using System.Media;
+using Microsoft.VisualBasic;
 namespace Hazard_Video
 {
     public partial class Form1 : Form
@@ -29,6 +30,7 @@ namespace Hazard_Video
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            panel3.Visible = false;
             panel1.Dock = DockStyle.Fill;
             pNextQuestion.Dock = DockStyle.Fill;
             pNextQuestion.Visible = false;
@@ -41,6 +43,7 @@ namespace Hazard_Video
             load_videos_ui();
             load_test_state();
            // wmp.PositionChange += new AxWMPLib._WMPOCXEvents_PositionChangeEventHandler(movie_tick);
+
               }
 
         private void load_test_state()
@@ -62,18 +65,7 @@ namespace Hazard_Video
             if (!File.Exists(definition_file))
             {
                 hazard_videos = new List<Hazard_video>();
-                foreach (string v in Directory.GetFiles("videos/", "*.avi"))
-                {
-                    Hazard_video h = new Hazard_video();
-                    h.filename = v;
-                    hazard_videos.Add(h);
-                }
-                foreach (string v in Directory.GetFiles("videos/", "*.mp4"))
-                {
-                    Hazard_video h = new Hazard_video();
-                    h.filename = v;
-                    hazard_videos.Add(h);
-                }
+                find_videos_and_add();
             }
             else
             {
@@ -82,11 +74,58 @@ namespace Hazard_Video
                     string state = sr.ReadToEnd();
                     hazard_videos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Hazard_video>>(state);
                 }
+                if (hazard_videos.Count == 0)
+                {
+                    find_videos_and_add();
+                }
             }
+        }
+
+        private void find_videos_and_add()
+        {
+            if (!Directory.Exists("videos/"))
+            {
+                Directory.CreateDirectory("videos/");
+            }
+            foreach (string v in Directory.GetFiles("videos/", "*.avi"))
+            {
+                Hazard_video h = new Hazard_video();
+                h.filename = v;
+                if (!video_exists(h))
+                {
+                    hazard_videos.Add(h);
+                }
+            }
+            foreach (string v in Directory.GetFiles("videos/", "*.mp4"))
+            {
+                Hazard_video h = new Hazard_video();
+                h.filename = v;
+                if (!video_exists(h))
+                {
+                    hazard_videos.Add(h);
+                }
+            }
+            save_state();
+        }
+
+        private bool video_exists(Hazard_video h_new)
+        {
+            foreach (Hazard_video h in hazard_videos)
+            {
+                if (h.filename == h_new.filename)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         void save_state()
         {
+            if (!Directory.Exists("definitions/"))
+            {
+                Directory.CreateDirectory("definitions/");
+            }
             using (StreamWriter sw = new StreamWriter(definition_file))
             {
                 sw.Write(Newtonsoft.Json.JsonConvert.SerializeObject(hazard_videos));
@@ -467,6 +506,33 @@ namespace Hazard_Video
             else
             {
                 bDeleteHazard.Enabled = false;
+            }
+        }
+
+        private void bAddNewVideos_Click(object sender, EventArgs e)
+        {
+            find_videos_and_add();
+        }
+
+        private void rAdmin_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bShowAdmin_Click(object sender, EventArgs e)
+        {
+            if (bShowAdmin.Text == "Show Admin")
+            {
+                if ("wyburd" == Interaction.InputBox("Password key?").ToLower())
+                {
+                    panel3.Visible = true;
+                    bShowAdmin.Text = "Hide Admin";
+                }
+            }
+            else
+            {
+                panel3.Visible = false;
+                bShowAdmin.Text = "Show Admin";
             }
         }
 
