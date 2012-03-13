@@ -8,6 +8,7 @@
 *.AVI
 *.flv
 *.mp4
+*.wmv
 
 # Build results
 [Rr]elease/

@@ -48,6 +48,7 @@ namespace Hazard_Video
 
         private void load_test_state()
         {
+            return;
             if (File.Exists("definitions/test_state.json"))
             {
                 using (StreamReader sr = new StreamReader("definitions/test_state.json"))
@@ -87,7 +88,7 @@ namespace Hazard_Video
             {
                 Directory.CreateDirectory("videos/");
             }
-            foreach (string v in Directory.GetFiles("videos/", "*.avi"))
+            foreach (string v in Directory.GetFiles("videos/", "*.wmv"))
             {
                 Hazard_video h = new Hazard_video();
                 h.filename = v;
@@ -96,15 +97,7 @@ namespace Hazard_Video
                     hazard_videos.Add(h);
                 }
             }
-            foreach (string v in Directory.GetFiles("videos/", "*.mp4"))
-            {
-                Hazard_video h = new Hazard_video();
-                h.filename = v;
-                if (!video_exists(h))
-                {
-                    hazard_videos.Add(h);
-                }
-            }
+            load_videos_ui();
             save_state();
         }
 
@@ -207,7 +200,7 @@ namespace Hazard_Video
             timer1.Enabled = true;
             load_hazards();
             log("Begin Video: " + current_video.filename);
-            wmp.uiMode = "Full";
+            
             wmp.URL = current_video.filename;
             wmp.Ctlcontrols.play();
             wmp.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(wmp_PlayStateChange);
@@ -279,10 +272,15 @@ namespace Hazard_Video
        
         private void load_hazards()
         {
+            textBox1.Text = "";
+            textBox2.Text = "";
             lstHazards.Items.Clear();
-            foreach (Hazard h in current_video.hazards)
+            if (current_video != null)
             {
-                lstHazards.Items.Add(h.hazard_start + " - " + h.hazard_end);
+                foreach (Hazard h in current_video.hazards)
+                {
+                    lstHazards.Items.Add(h.hazard_start + " - " + h.hazard_end);
+                }
             }
         }
 
@@ -319,7 +317,7 @@ namespace Hazard_Video
 
         private void hazard_guessed_MouseLeave(object sender, EventArgs e)
         {
-            ((Label)sender).ForeColor = SystemColors.HotTrack;
+            ((Label)sender).ForeColor = Color.Black;
         }
 
         private void panel6_Resize(object sender, EventArgs e)
@@ -360,7 +358,7 @@ namespace Hazard_Video
 
         private void continue_test()
         {
-            wmp.uiMode = "None";
+            if (panel3.Visible == false) { wmp.uiMode = "None"; };
             foreach (Hazard_test_question q in current_hazard_test.hazard_test_questions)
             {
                 if (q.finished == false)
@@ -421,6 +419,7 @@ namespace Hazard_Video
 
         private void save_test_state()
         {
+            return;
             using (StreamWriter sw = new StreamWriter("definitions/test_state.json"))
             {
                 sw.Write(Newtonsoft.Json.JsonConvert.SerializeObject(current_hazard_test));
@@ -495,13 +494,17 @@ namespace Hazard_Video
         private void bDeleteHazard_Click(object sender, EventArgs e)
         {
             current_video.hazards.RemoveAt(lstHazards.SelectedIndex);
+            load_hazards();
         }
 
         private void lstHazards_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             if (lstHazards.SelectedIndex > -1)
             {
                 bDeleteHazard.Enabled = true;
+                textBox1.Text = current_video.hazards[lstHazards.SelectedIndex].hazard_start.ToString();
+                    textBox2.Text = current_video.hazards[lstHazards.SelectedIndex].hazard_end.ToString();
             }
             else
             {
@@ -525,15 +528,34 @@ namespace Hazard_Video
             {
                 if ("wyburd" == Interaction.InputBox("Password key?").ToLower())
                 {
+                    wmp.uiMode = "Full";
                     panel3.Visible = true;
                     bShowAdmin.Text = "Hide Admin";
                 }
             }
             else
             {
+                wmp.uiMode = "none";
                 panel3.Visible = false;
                 bShowAdmin.Text = "Show Admin";
             }
+        }
+
+        private void wmp_MouseUpEvent(object sender, AxWMPLib._WMPOCXEvents_MouseUpEvent e)
+        {
+            hazard_guessed.ForeColor = Color.White;
+            timer2.Enabled = true;
+        }
+
+        private void wmp_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            hazard_guessed.ForeColor = Color.Black;
+            timer2.Enabled = false;
         }
 
     }

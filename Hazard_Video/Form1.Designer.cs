@@ -43,12 +43,15 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.wmp = new AxWMPLib.AxWindowsMediaPlayer();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.bShowAdmin = new System.Windows.Forms.Button();
             this.wmp_click = new AxWMPLib.AxWindowsMediaPlayer();
             this.lstHazards = new System.Windows.Forms.ListBox();
             this.lstVideos = new System.Windows.Forms.ListBox();
             this.lHazardIndicator = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
+            this.bAddNewVideos = new System.Windows.Forms.Button();
             this.bDeleteHazard = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -71,12 +74,11 @@
             this.lScore = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.bAddNewVideos = new System.Windows.Forms.Button();
-            this.bShowAdmin = new System.Windows.Forms.Button();
-            this.panel7 = new System.Windows.Forms.Panel();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wmp)).BeginInit();
             this.panel2.SuspendLayout();
+            this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wmp_click)).BeginInit();
             this.panel3.SuspendLayout();
             this.pre_test_detail_panel.SuspendLayout();
@@ -85,7 +87,6 @@
             this.panel6.SuspendLayout();
             this.pNextQuestion.SuspendLayout();
             this.pTestFinished.SuspendLayout();
-            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // hazard_guessed
@@ -94,7 +95,7 @@
             this.hazard_guessed.Cursor = System.Windows.Forms.Cursors.Hand;
             this.hazard_guessed.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.hazard_guessed.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hazard_guessed.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.hazard_guessed.ForeColor = System.Drawing.Color.Black;
             this.hazard_guessed.Location = new System.Drawing.Point(17, 8);
             this.hazard_guessed.Name = "hazard_guessed";
             this.hazard_guessed.Size = new System.Drawing.Size(87, 25);
@@ -174,7 +175,9 @@
             this.wmp.Size = new System.Drawing.Size(191, 211);
             this.wmp.TabIndex = 0;
             this.wmp.ClickEvent += new AxWMPLib._WMPOCXEvents_ClickEventHandler(this.wmp_ClickEvent);
+            this.wmp.MouseUpEvent += new AxWMPLib._WMPOCXEvents_MouseUpEventHandler(this.wmp_MouseUpEvent);
             this.wmp.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.wmp_PlayStateChange);
+            this.wmp.Enter += new System.EventHandler(this.wmp_Enter);
             // 
             // panel2
             // 
@@ -187,6 +190,25 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(441, 43);
             this.panel2.TabIndex = 2;
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.bShowAdmin);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel7.Location = new System.Drawing.Point(358, 0);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(83, 43);
+            this.panel7.TabIndex = 21;
+            // 
+            // bShowAdmin
+            // 
+            this.bShowAdmin.Location = new System.Drawing.Point(3, 8);
+            this.bShowAdmin.Name = "bShowAdmin";
+            this.bShowAdmin.Size = new System.Drawing.Size(75, 23);
+            this.bShowAdmin.TabIndex = 20;
+            this.bShowAdmin.Text = "Show Admin";
+            this.bShowAdmin.UseVisualStyleBackColor = true;
+            this.bShowAdmin.Click += new System.EventHandler(this.bShowAdmin_Click);
             // 
             // wmp_click
             // 
@@ -250,6 +272,16 @@
             this.panel3.Size = new System.Drawing.Size(200, 450);
             this.panel3.TabIndex = 17;
             this.panel3.Visible = false;
+            // 
+            // bAddNewVideos
+            // 
+            this.bAddNewVideos.Location = new System.Drawing.Point(93, 96);
+            this.bAddNewVideos.Name = "bAddNewVideos";
+            this.bAddNewVideos.Size = new System.Drawing.Size(75, 23);
+            this.bAddNewVideos.TabIndex = 21;
+            this.bAddNewVideos.Text = "Add new Videos";
+            this.bAddNewVideos.UseVisualStyleBackColor = true;
+            this.bAddNewVideos.Click += new System.EventHandler(this.bAddNewVideos_Click);
             // 
             // bDeleteHazard
             // 
@@ -470,34 +502,10 @@
             this.label7.TabIndex = 0;
             this.label7.Text = "You finished the test!";
             // 
-            // bAddNewVideos
+            // timer2
             // 
-            this.bAddNewVideos.Location = new System.Drawing.Point(93, 96);
-            this.bAddNewVideos.Name = "bAddNewVideos";
-            this.bAddNewVideos.Size = new System.Drawing.Size(75, 23);
-            this.bAddNewVideos.TabIndex = 21;
-            this.bAddNewVideos.Text = "Add new Videos";
-            this.bAddNewVideos.UseVisualStyleBackColor = true;
-            this.bAddNewVideos.Click += new System.EventHandler(this.bAddNewVideos_Click);
-            // 
-            // bShowAdmin
-            // 
-            this.bShowAdmin.Location = new System.Drawing.Point(3, 8);
-            this.bShowAdmin.Name = "bShowAdmin";
-            this.bShowAdmin.Size = new System.Drawing.Size(75, 23);
-            this.bShowAdmin.TabIndex = 20;
-            this.bShowAdmin.Text = "Show Admin";
-            this.bShowAdmin.UseVisualStyleBackColor = true;
-            this.bShowAdmin.Click += new System.EventHandler(this.bShowAdmin_Click);
-            // 
-            // panel7
-            // 
-            this.panel7.Controls.Add(this.bShowAdmin);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel7.Location = new System.Drawing.Point(358, 0);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(83, 43);
-            this.panel7.TabIndex = 21;
+            this.timer2.Interval = 1500;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // Form1
             // 
@@ -518,6 +526,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.wmp)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.wmp_click)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
@@ -530,7 +539,6 @@
             this.pNextQuestion.ResumeLayout(false);
             this.pTestFinished.ResumeLayout(false);
             this.pTestFinished.PerformLayout();
-            this.panel7.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -579,6 +587,7 @@
         private System.Windows.Forms.Button bAddNewVideos;
         private System.Windows.Forms.Button bShowAdmin;
         private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Timer timer2;
     }
 }
 
